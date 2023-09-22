@@ -69,11 +69,11 @@ class _MovieHomeState extends State<MovieHome> {
                 ],
               ),
               SizedBox(
-                height: 315,
+                height: 275,
                 width: double.infinity,
                 child: BlocBuilder<TopRatedMoviesBloc, TopRatedMoviesState>(
                   builder: (context, state) {
-                    if (state is TrendingMoviesLoadingState) {
+                    if (state is TopRatedMoviesLoadingState) {
                       return const SizedBox(
                         height: 45,
                         width: 45,
@@ -88,72 +88,7 @@ class _MovieHomeState extends State<MovieHome> {
                         scrollDirection: Axis.horizontal,
                         itemCount: movies.length,
                         itemBuilder: (context, index) {
-                          return InkWell(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: ((context) => MovieDetailScreen(
-                                      movieId: movies[index].id)),
-                                ),
-                              );
-                            },
-                            child: Container(
-                              margin: const EdgeInsets.all(8),
-                              width: 150,
-                              child: Column(
-                                children: [
-                                  Stack(
-                                    children: [
-                                      ClipRRect(
-                                        borderRadius: BorderRadius.circular(8),
-                                        child: Image.network(
-                                            'https://image.tmdb.org/t/p/w500//${movies[index].poster_path}'),
-                                      ),
-                                      Positioned(
-                                          left: 10,
-                                          bottom: 4,
-                                          child: Container(
-                                            color: Colors.black,
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsets.all(8.0),
-                                              child: Text(
-                                                  '${movies[index].vote_average.toString()}/10'),
-                                            ),
-                                          )),
-                                      Positioned(
-                                        top: 4,
-                                        left: 4,
-                                        child: Container(
-                                          color: Colors.black,
-                                          child: movies[index].adult
-                                              ? const Padding(
-                                                  padding: EdgeInsets.all(8.0),
-                                                  child: Text(
-                                                    '18+',
-                                                    style: TextStyle(
-                                                        color: Color.fromARGB(
-                                                            255, 255, 96, 47)),
-                                                  ),
-                                                )
-                                              : const SizedBox(),
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                  const SizedBox(
-                                    height: 8,
-                                  ),
-                                  Text(
-                                    movies[index].title,
-                                    textAlign: TextAlign.center,
-                                    style: GoogleFonts.nunito(fontSize: 16),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          );
+                          return movieCard(context, movies, index);
                         },
                       );
                     } else {
@@ -163,7 +98,7 @@ class _MovieHomeState extends State<MovieHome> {
                 ),
               ),
               const SizedBox(
-                height: 10,
+                height: 0,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -177,7 +112,7 @@ class _MovieHomeState extends State<MovieHome> {
                 ],
               ),
               SizedBox(
-                height: 315,
+                height: 275,
                 width: double.infinity,
                 child: BlocBuilder<TrendingMoviesBloc, TrendingMoviesState>(
                   builder: (context, state) {
@@ -196,72 +131,7 @@ class _MovieHomeState extends State<MovieHome> {
                         scrollDirection: Axis.horizontal,
                         itemCount: movies.length,
                         itemBuilder: (context, index) {
-                          return InkWell(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: ((context) => MovieDetailScreen(
-                                      movieId: movies[index].id)),
-                                ),
-                              );
-                            },
-                            child: Container(
-                              margin: const EdgeInsets.all(8),
-                              width: 150,
-                              child: Column(
-                                children: [
-                                  Stack(
-                                    children: [
-                                      ClipRRect(
-                                        borderRadius: BorderRadius.circular(8),
-                                        child: Image.network(
-                                            'https://image.tmdb.org/t/p/w500//${movies[index].poster_path}'),
-                                      ),
-                                      Positioned(
-                                          left: 10,
-                                          bottom: 4,
-                                          child: Container(
-                                            color: Colors.black,
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsets.all(8.0),
-                                              child: Text(
-                                                  '${movies[index].vote_average.toString()}/10'),
-                                            ),
-                                          )),
-                                      Positioned(
-                                        top: 4,
-                                        left: 4,
-                                        child: Container(
-                                          color: Colors.black,
-                                          child: movies[index].adult
-                                              ? const Padding(
-                                                  padding: EdgeInsets.all(8.0),
-                                                  child: Text(
-                                                    '18+',
-                                                    style: TextStyle(
-                                                        color: Color.fromARGB(
-                                                            255, 255, 96, 47)),
-                                                  ),
-                                                )
-                                              : const SizedBox(),
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                  const SizedBox(
-                                    height: 8,
-                                  ),
-                                  Text(
-                                    movies[index].title,
-                                    textAlign: TextAlign.center,
-                                    style: GoogleFonts.nunito(fontSize: 16),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          );
+                          return movieCard(context, movies, index);
                         },
                       );
                     } else {
@@ -271,7 +141,7 @@ class _MovieHomeState extends State<MovieHome> {
                 ),
               ),
               const SizedBox(
-                height: 10,
+                height: 0,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -285,7 +155,7 @@ class _MovieHomeState extends State<MovieHome> {
                 ],
               ),
               SizedBox(
-                height: 315,
+                height: 275,
                 width: double.infinity,
                 child: BlocBuilder<NowPlayingMoviesBloc, NowPlayingMoviesState>(
                   builder: (context, state) {
@@ -304,72 +174,7 @@ class _MovieHomeState extends State<MovieHome> {
                         scrollDirection: Axis.horizontal,
                         itemCount: movies.length,
                         itemBuilder: (context, index) {
-                          return InkWell(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: ((context) => MovieDetailScreen(
-                                      movieId: movies[index].id)),
-                                ),
-                              );
-                            },
-                            child: Container(
-                              margin: const EdgeInsets.all(8),
-                              width: 150,
-                              child: Column(
-                                children: [
-                                  Stack(
-                                    children: [
-                                      ClipRRect(
-                                        borderRadius: BorderRadius.circular(8),
-                                        child: Image.network(
-                                            'https://image.tmdb.org/t/p/w500//${movies[index].poster_path}'),
-                                      ),
-                                      Positioned(
-                                          left: 10,
-                                          bottom: 4,
-                                          child: Container(
-                                            color: Colors.black,
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsets.all(8.0),
-                                              child: Text(
-                                                  '${movies[index].vote_average.toString()}/10'),
-                                            ),
-                                          )),
-                                      Positioned(
-                                        top: 4,
-                                        left: 4,
-                                        child: Container(
-                                          color: Colors.black,
-                                          child: movies[index].adult
-                                              ? const Padding(
-                                                  padding: EdgeInsets.all(8.0),
-                                                  child: Text(
-                                                    '18+',
-                                                    style: TextStyle(
-                                                        color: Color.fromARGB(
-                                                            255, 255, 96, 47)),
-                                                  ),
-                                                )
-                                              : const SizedBox(),
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                  const SizedBox(
-                                    height: 8,
-                                  ),
-                                  Text(
-                                    movies[index].title,
-                                    textAlign: TextAlign.center,
-                                    style: GoogleFonts.nunito(fontSize: 16),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          );
+                          return movieCard(context, movies, index);
                         },
                       );
                     } else {
@@ -379,7 +184,7 @@ class _MovieHomeState extends State<MovieHome> {
                 ),
               ),
               const SizedBox(
-                height: 10,
+                height: 0,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -393,7 +198,7 @@ class _MovieHomeState extends State<MovieHome> {
                 ],
               ),
               SizedBox(
-                height: 315,
+                height: 275,
                 width: double.infinity,
                 child: BlocBuilder<UpcomingMoviesBloc, UpcomingMoviesState>(
                   builder: (context, state) {
@@ -412,72 +217,7 @@ class _MovieHomeState extends State<MovieHome> {
                         scrollDirection: Axis.horizontal,
                         itemCount: movies.length,
                         itemBuilder: (context, index) {
-                          return InkWell(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: ((context) => MovieDetailScreen(
-                                      movieId: movies[index].id)),
-                                ),
-                              );
-                            },
-                            child: Container(
-                              margin: const EdgeInsets.all(8),
-                              width: 150,
-                              child: Column(
-                                children: [
-                                  Stack(
-                                    children: [
-                                      ClipRRect(
-                                        borderRadius: BorderRadius.circular(8),
-                                        child: Image.network(
-                                            'https://image.tmdb.org/t/p/w500//${movies[index].poster_path}'),
-                                      ),
-                                      Positioned(
-                                          left: 10,
-                                          bottom: 4,
-                                          child: Container(
-                                            color: Colors.black,
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsets.all(8.0),
-                                              child: Text(
-                                                  '${movies[index].vote_average.toString()}/10'),
-                                            ),
-                                          )),
-                                      Positioned(
-                                        top: 4,
-                                        left: 4,
-                                        child: Container(
-                                          color: Colors.black,
-                                          child: movies[index].adult
-                                              ? const Padding(
-                                                  padding: EdgeInsets.all(8.0),
-                                                  child: Text(
-                                                    '18+',
-                                                    style: TextStyle(
-                                                        color: Color.fromARGB(
-                                                            255, 255, 96, 47)),
-                                                  ),
-                                                )
-                                              : const SizedBox(),
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                  const SizedBox(
-                                    height: 8,
-                                  ),
-                                  Text(
-                                    movies[index].title,
-                                    textAlign: TextAlign.center,
-                                    style: GoogleFonts.nunito(fontSize: 16),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          );
+                          return movieCard(context, movies, index);
                         },
                       );
                     } else {
@@ -488,6 +228,74 @@ class _MovieHomeState extends State<MovieHome> {
               )
             ],
           ),
+        ),
+      ),
+    );
+  }
+
+  GestureDetector movieCard(
+      BuildContext context, List<MovieInfo> movies, int index) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: ((context) =>
+                MovieDetailScreen(movieId: movies[index].id)),
+          ),
+        );
+      },
+      child: Container(
+        margin: const EdgeInsets.all(8),
+        width: 125,
+        child: Column(
+          children: [
+            Stack(
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(8),
+                  child: Image.network(
+                      'https://image.tmdb.org/t/p/w500//${movies[index].poster_path}'),
+                ),
+                Positioned(
+                    left: 10,
+                    bottom: 4,
+                    child: Container(
+                      color: Colors.black,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child:
+                            Text('${movies[index].vote_average.toString()}/10'),
+                      ),
+                    )),
+                Positioned(
+                  top: 4,
+                  left: 4,
+                  child: Container(
+                    color: Colors.black,
+                    child: movies[index].adult
+                        ? const Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: Text(
+                              '18+',
+                              style: TextStyle(
+                                  color: Color.fromARGB(255, 255, 96, 47)),
+                            ),
+                          )
+                        : const SizedBox(),
+                  ),
+                )
+              ],
+            ),
+            const SizedBox(
+              height: 8,
+            ),
+            Text(
+              movies[index].title,
+              textAlign: TextAlign.center,
+              style: GoogleFonts.nunito(fontSize: 12),
+            ),
+          ],
         ),
       ),
     );
