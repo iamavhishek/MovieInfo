@@ -30,9 +30,6 @@ Serializers _$serializers = (new Serializers().toBuilder()
           const FullType(BuiltList, const [const FullType(MovieInfo)]),
           () => new ListBuilder<MovieInfo>())
       ..addBuilderFactory(
-          const FullType(BuiltList, const [const FullType(MovieInfo)]),
-          () => new ListBuilder<MovieInfo>())
-      ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(int)]),
           () => new ListBuilder<int>()))
     .build();

@@ -18,7 +18,6 @@ class NowPlayingMoviesBloc
         final movies = await movieRepository.getNowPlayingMovie();
         emit(NowPlayingMoviesLoadedState(movies.results.asList()));
       } catch (e) {
-        print(e);
         emit(NowPlayingMoviesLoadingErrorState(error: e.toString()));
       }
     });

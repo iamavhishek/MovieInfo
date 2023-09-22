@@ -430,10 +430,6 @@ class _$MovieGenreSerializer implements StructuredSerializer<MovieGenre> {
   Iterable<Object?> serialize(Serializers serializers, MovieGenre object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object?>[
-      'results',
-      serializers.serialize(object.results,
-          specifiedType:
-              const FullType(BuiltList, const [const FullType(MovieInfo)])),
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(int)),
       'name',
@@ -454,12 +450,6 @@ class _$MovieGenreSerializer implements StructuredSerializer<MovieGenre> {
       iterator.moveNext();
       final Object? value = iterator.current;
       switch (key) {
-        case 'results':
-          result.results.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(MovieInfo)]))!
-              as BuiltList<Object?>);
-          break;
         case 'id':
           result.id = serializers.deserialize(value,
               specifiedType: const FullType(int))! as int;
@@ -521,6 +511,13 @@ class _$MovieDetailSerializer implements StructuredSerializer<MovieDetail> {
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
+    value = object.poster_path;
+    if (value != null) {
+      result
+        ..add('poster_path')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
     return result;
   }
 
@@ -575,6 +572,10 @@ class _$MovieDetailSerializer implements StructuredSerializer<MovieDetail> {
           break;
         case 'rating':
           result.rating = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'poster_path':
+          result.poster_path = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
           break;
       }
@@ -1470,8 +1471,6 @@ class NowPlayingMoviesBuilder
 
 class _$MovieGenre extends MovieGenre {
   @override
-  final BuiltList<MovieInfo> results;
-  @override
   final int id;
   @override
   final String name;
@@ -1479,9 +1478,7 @@ class _$MovieGenre extends MovieGenre {
   factory _$MovieGenre([void Function(MovieGenreBuilder)? updates]) =>
       (new MovieGenreBuilder()..update(updates))._build();
 
-  _$MovieGenre._({required this.results, required this.id, required this.name})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(results, r'MovieGenre', 'results');
+  _$MovieGenre._({required this.id, required this.name}) : super._() {
     BuiltValueNullFieldError.checkNotNull(id, r'MovieGenre', 'id');
     BuiltValueNullFieldError.checkNotNull(name, r'MovieGenre', 'name');
   }
@@ -1496,16 +1493,12 @@ class _$MovieGenre extends MovieGenre {
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is MovieGenre &&
-        results == other.results &&
-        id == other.id &&
-        name == other.name;
+    return other is MovieGenre && id == other.id && name == other.name;
   }
 
   @override
   int get hashCode {
     var _$hash = 0;
-    _$hash = $jc(_$hash, results.hashCode);
     _$hash = $jc(_$hash, id.hashCode);
     _$hash = $jc(_$hash, name.hashCode);
     _$hash = $jf(_$hash);
@@ -1515,7 +1508,6 @@ class _$MovieGenre extends MovieGenre {
   @override
   String toString() {
     return (newBuiltValueToStringHelper(r'MovieGenre')
-          ..add('results', results)
           ..add('id', id)
           ..add('name', name))
         .toString();
@@ -1524,11 +1516,6 @@ class _$MovieGenre extends MovieGenre {
 
 class MovieGenreBuilder implements Builder<MovieGenre, MovieGenreBuilder> {
   _$MovieGenre? _$v;
-
-  ListBuilder<MovieInfo>? _results;
-  ListBuilder<MovieInfo> get results =>
-      _$this._results ??= new ListBuilder<MovieInfo>();
-  set results(ListBuilder<MovieInfo>? results) => _$this._results = results;
 
   int? _id;
   int? get id => _$this._id;
@@ -1543,7 +1530,6 @@ class MovieGenreBuilder implements Builder<MovieGenre, MovieGenreBuilder> {
   MovieGenreBuilder get _$this {
     final $v = _$v;
     if ($v != null) {
-      _results = $v.results.toBuilder();
       _id = $v.id;
       _name = $v.name;
       _$v = null;
@@ -1566,26 +1552,11 @@ class MovieGenreBuilder implements Builder<MovieGenre, MovieGenreBuilder> {
   MovieGenre build() => _build();
 
   _$MovieGenre _build() {
-    _$MovieGenre _$result;
-    try {
-      _$result = _$v ??
-          new _$MovieGenre._(
-              results: results.build(),
-              id: BuiltValueNullFieldError.checkNotNull(
-                  id, r'MovieGenre', 'id'),
-              name: BuiltValueNullFieldError.checkNotNull(
-                  name, r'MovieGenre', 'name'));
-    } catch (_) {
-      late String _$failedField;
-      try {
-        _$failedField = 'results';
-        results.build();
-      } catch (e) {
-        throw new BuiltValueNestedFieldError(
-            r'MovieGenre', _$failedField, e.toString());
-      }
-      rethrow;
-    }
+    final _$result = _$v ??
+        new _$MovieGenre._(
+            id: BuiltValueNullFieldError.checkNotNull(id, r'MovieGenre', 'id'),
+            name: BuiltValueNullFieldError.checkNotNull(
+                name, r'MovieGenre', 'name'));
     replace(_$result);
     return _$result;
   }
@@ -1612,6 +1583,8 @@ class _$MovieDetail extends MovieDetail {
   final String status;
   @override
   final String? rating;
+  @override
+  final String? poster_path;
 
   factory _$MovieDetail([void Function(MovieDetailBuilder)? updates]) =>
       (new MovieDetailBuilder()..update(updates))._build();
@@ -1626,7 +1599,8 @@ class _$MovieDetail extends MovieDetail {
       required this.release_date,
       required this.runtime,
       required this.status,
-      this.rating})
+      this.rating,
+      this.poster_path})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(adult, r'MovieDetail', 'adult');
     BuiltValueNullFieldError.checkNotNull(
@@ -1662,7 +1636,8 @@ class _$MovieDetail extends MovieDetail {
         release_date == other.release_date &&
         runtime == other.runtime &&
         status == other.status &&
-        rating == other.rating;
+        rating == other.rating &&
+        poster_path == other.poster_path;
   }
 
   @override
@@ -1678,6 +1653,7 @@ class _$MovieDetail extends MovieDetail {
     _$hash = $jc(_$hash, runtime.hashCode);
     _$hash = $jc(_$hash, status.hashCode);
     _$hash = $jc(_$hash, rating.hashCode);
+    _$hash = $jc(_$hash, poster_path.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -1694,7 +1670,8 @@ class _$MovieDetail extends MovieDetail {
           ..add('release_date', release_date)
           ..add('runtime', runtime)
           ..add('status', status)
-          ..add('rating', rating))
+          ..add('rating', rating)
+          ..add('poster_path', poster_path))
         .toString();
   }
 }
@@ -1745,6 +1722,10 @@ class MovieDetailBuilder implements Builder<MovieDetail, MovieDetailBuilder> {
   String? get rating => _$this._rating;
   set rating(String? rating) => _$this._rating = rating;
 
+  String? _poster_path;
+  String? get poster_path => _$this._poster_path;
+  set poster_path(String? poster_path) => _$this._poster_path = poster_path;
+
   MovieDetailBuilder();
 
   MovieDetailBuilder get _$this {
@@ -1760,6 +1741,7 @@ class MovieDetailBuilder implements Builder<MovieDetail, MovieDetailBuilder> {
       _runtime = $v.runtime;
       _status = $v.status;
       _rating = $v.rating;
+      _poster_path = $v.poster_path;
       _$v = null;
     }
     return this;
@@ -1801,7 +1783,8 @@ class MovieDetailBuilder implements Builder<MovieDetail, MovieDetailBuilder> {
                   runtime, r'MovieDetail', 'runtime'),
               status: BuiltValueNullFieldError.checkNotNull(
                   status, r'MovieDetail', 'status'),
-              rating: rating);
+              rating: rating,
+              poster_path: poster_path);
     } catch (_) {
       late String _$failedField;
       try {

@@ -94,7 +94,6 @@ abstract class NowPlayingMovies
 }
 
 abstract class MovieGenre implements Built<MovieGenre, MovieGenreBuilder> {
-  BuiltList<MovieInfo> get results;
   int get id;
   String get name;
 
@@ -116,6 +115,7 @@ abstract class MovieDetail implements Built<MovieDetail, MovieDetailBuilder> {
   double get runtime;
   String get status;
   String? get rating;
+  String? get poster_path;
 
   MovieDetail._();
 
