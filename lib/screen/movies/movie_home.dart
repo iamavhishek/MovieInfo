@@ -196,8 +196,16 @@ class _MovieHomeState extends State<MovieHome> {
                         scrollDirection: Axis.horizontal,
                         itemCount: movies.length,
                         itemBuilder: (context, index) {
-                          return ClipRRect(
-                            borderRadius: BorderRadius.circular(8),
+                          return InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: ((context) => MovieDetailScreen(
+                                      movieId: movies[index].id)),
+                                ),
+                              );
+                            },
                             child: Container(
                               margin: const EdgeInsets.all(8),
                               width: 150,
@@ -296,8 +304,16 @@ class _MovieHomeState extends State<MovieHome> {
                         scrollDirection: Axis.horizontal,
                         itemCount: movies.length,
                         itemBuilder: (context, index) {
-                          return ClipRRect(
-                            borderRadius: BorderRadius.circular(8),
+                          return InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: ((context) => MovieDetailScreen(
+                                      movieId: movies[index].id)),
+                                ),
+                              );
+                            },
                             child: Container(
                               margin: const EdgeInsets.all(8),
                               width: 150,
@@ -396,8 +412,16 @@ class _MovieHomeState extends State<MovieHome> {
                         scrollDirection: Axis.horizontal,
                         itemCount: movies.length,
                         itemBuilder: (context, index) {
-                          return ClipRRect(
-                            borderRadius: BorderRadius.circular(8),
+                          return InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: ((context) => MovieDetailScreen(
+                                      movieId: movies[index].id)),
+                                ),
+                              );
+                            },
                             child: Container(
                               margin: const EdgeInsets.all(8),
                               width: 150,
