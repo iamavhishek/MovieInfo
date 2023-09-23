@@ -17,6 +17,9 @@ Serializer<NowPlayingMovies> _$nowPlayingMoviesSerializer =
     new _$NowPlayingMoviesSerializer();
 Serializer<MovieGenre> _$movieGenreSerializer = new _$MovieGenreSerializer();
 Serializer<MovieDetail> _$movieDetailSerializer = new _$MovieDetailSerializer();
+Serializer<MovieCredits> _$movieCreditsSerializer =
+    new _$MovieCreditsSerializer();
+Serializer<MovieCast> _$movieCastSerializer = new _$MovieCastSerializer();
 
 class _$MovieInfoSerializer implements StructuredSerializer<MovieInfo> {
   @override
@@ -577,6 +580,165 @@ class _$MovieDetailSerializer implements StructuredSerializer<MovieDetail> {
         case 'poster_path':
           result.poster_path = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$MovieCreditsSerializer implements StructuredSerializer<MovieCredits> {
+  @override
+  final Iterable<Type> types = const [MovieCredits, _$MovieCredits];
+  @override
+  final String wireName = 'MovieCredits';
+
+  @override
+  Iterable<Object?> serialize(Serializers serializers, MovieCredits object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object?>[
+      'cast',
+      serializers.serialize(object.cast,
+          specifiedType:
+              const FullType(BuiltList, const [const FullType(MovieCast)])),
+    ];
+
+    return result;
+  }
+
+  @override
+  MovieCredits deserialize(
+      Serializers serializers, Iterable<Object?> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new MovieCreditsBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current! as String;
+      iterator.moveNext();
+      final Object? value = iterator.current;
+      switch (key) {
+        case 'cast':
+          result.cast.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(MovieCast)]))!
+              as BuiltList<Object?>);
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$MovieCastSerializer implements StructuredSerializer<MovieCast> {
+  @override
+  final Iterable<Type> types = const [MovieCast, _$MovieCast];
+  @override
+  final String wireName = 'MovieCast';
+
+  @override
+  Iterable<Object?> serialize(Serializers serializers, MovieCast object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object?>[
+      'adult',
+      serializers.serialize(object.adult, specifiedType: const FullType(bool)),
+      'gender',
+      serializers.serialize(object.gender, specifiedType: const FullType(int)),
+      'id',
+      serializers.serialize(object.id, specifiedType: const FullType(int)),
+      'known_for_department',
+      serializers.serialize(object.known_for_department,
+          specifiedType: const FullType(String)),
+      'name',
+      serializers.serialize(object.name, specifiedType: const FullType(String)),
+      'original_name',
+      serializers.serialize(object.original_name,
+          specifiedType: const FullType(String)),
+      'popularity',
+      serializers.serialize(object.popularity,
+          specifiedType: const FullType(double)),
+      'cast_id',
+      serializers.serialize(object.cast_id, specifiedType: const FullType(int)),
+      'character',
+      serializers.serialize(object.character,
+          specifiedType: const FullType(String)),
+      'credit_id',
+      serializers.serialize(object.credit_id,
+          specifiedType: const FullType(String)),
+      'order',
+      serializers.serialize(object.order, specifiedType: const FullType(int)),
+    ];
+    Object? value;
+    value = object.profile_path;
+    if (value != null) {
+      result
+        ..add('profile_path')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    return result;
+  }
+
+  @override
+  MovieCast deserialize(Serializers serializers, Iterable<Object?> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new MovieCastBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current! as String;
+      iterator.moveNext();
+      final Object? value = iterator.current;
+      switch (key) {
+        case 'adult':
+          result.adult = serializers.deserialize(value,
+              specifiedType: const FullType(bool))! as bool;
+          break;
+        case 'gender':
+          result.gender = serializers.deserialize(value,
+              specifiedType: const FullType(int))! as int;
+          break;
+        case 'id':
+          result.id = serializers.deserialize(value,
+              specifiedType: const FullType(int))! as int;
+          break;
+        case 'known_for_department':
+          result.known_for_department = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+        case 'name':
+          result.name = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+        case 'original_name':
+          result.original_name = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+        case 'popularity':
+          result.popularity = serializers.deserialize(value,
+              specifiedType: const FullType(double))! as double;
+          break;
+        case 'profile_path':
+          result.profile_path = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'cast_id':
+          result.cast_id = serializers.deserialize(value,
+              specifiedType: const FullType(int))! as int;
+          break;
+        case 'character':
+          result.character = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+        case 'credit_id':
+          result.credit_id = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+        case 'order':
+          result.order = serializers.deserialize(value,
+              specifiedType: const FullType(int))! as int;
           break;
       }
     }
@@ -1796,6 +1958,340 @@ class MovieDetailBuilder implements Builder<MovieDetail, MovieDetailBuilder> {
       }
       rethrow;
     }
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$MovieCredits extends MovieCredits {
+  @override
+  final BuiltList<MovieCast> cast;
+
+  factory _$MovieCredits([void Function(MovieCreditsBuilder)? updates]) =>
+      (new MovieCreditsBuilder()..update(updates))._build();
+
+  _$MovieCredits._({required this.cast}) : super._() {
+    BuiltValueNullFieldError.checkNotNull(cast, r'MovieCredits', 'cast');
+  }
+
+  @override
+  MovieCredits rebuild(void Function(MovieCreditsBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  MovieCreditsBuilder toBuilder() => new MovieCreditsBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is MovieCredits && cast == other.cast;
+  }
+
+  @override
+  int get hashCode {
+    var _$hash = 0;
+    _$hash = $jc(_$hash, cast.hashCode);
+    _$hash = $jf(_$hash);
+    return _$hash;
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper(r'MovieCredits')..add('cast', cast))
+        .toString();
+  }
+}
+
+class MovieCreditsBuilder
+    implements Builder<MovieCredits, MovieCreditsBuilder> {
+  _$MovieCredits? _$v;
+
+  ListBuilder<MovieCast>? _cast;
+  ListBuilder<MovieCast> get cast =>
+      _$this._cast ??= new ListBuilder<MovieCast>();
+  set cast(ListBuilder<MovieCast>? cast) => _$this._cast = cast;
+
+  MovieCreditsBuilder();
+
+  MovieCreditsBuilder get _$this {
+    final $v = _$v;
+    if ($v != null) {
+      _cast = $v.cast.toBuilder();
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(MovieCredits other) {
+    ArgumentError.checkNotNull(other, 'other');
+    _$v = other as _$MovieCredits;
+  }
+
+  @override
+  void update(void Function(MovieCreditsBuilder)? updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  MovieCredits build() => _build();
+
+  _$MovieCredits _build() {
+    _$MovieCredits _$result;
+    try {
+      _$result = _$v ?? new _$MovieCredits._(cast: cast.build());
+    } catch (_) {
+      late String _$failedField;
+      try {
+        _$failedField = 'cast';
+        cast.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            r'MovieCredits', _$failedField, e.toString());
+      }
+      rethrow;
+    }
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$MovieCast extends MovieCast {
+  @override
+  final bool adult;
+  @override
+  final int gender;
+  @override
+  final int id;
+  @override
+  final String known_for_department;
+  @override
+  final String name;
+  @override
+  final String original_name;
+  @override
+  final double popularity;
+  @override
+  final String? profile_path;
+  @override
+  final int cast_id;
+  @override
+  final String character;
+  @override
+  final String credit_id;
+  @override
+  final int order;
+
+  factory _$MovieCast([void Function(MovieCastBuilder)? updates]) =>
+      (new MovieCastBuilder()..update(updates))._build();
+
+  _$MovieCast._(
+      {required this.adult,
+      required this.gender,
+      required this.id,
+      required this.known_for_department,
+      required this.name,
+      required this.original_name,
+      required this.popularity,
+      this.profile_path,
+      required this.cast_id,
+      required this.character,
+      required this.credit_id,
+      required this.order})
+      : super._() {
+    BuiltValueNullFieldError.checkNotNull(adult, r'MovieCast', 'adult');
+    BuiltValueNullFieldError.checkNotNull(gender, r'MovieCast', 'gender');
+    BuiltValueNullFieldError.checkNotNull(id, r'MovieCast', 'id');
+    BuiltValueNullFieldError.checkNotNull(
+        known_for_department, r'MovieCast', 'known_for_department');
+    BuiltValueNullFieldError.checkNotNull(name, r'MovieCast', 'name');
+    BuiltValueNullFieldError.checkNotNull(
+        original_name, r'MovieCast', 'original_name');
+    BuiltValueNullFieldError.checkNotNull(
+        popularity, r'MovieCast', 'popularity');
+    BuiltValueNullFieldError.checkNotNull(cast_id, r'MovieCast', 'cast_id');
+    BuiltValueNullFieldError.checkNotNull(character, r'MovieCast', 'character');
+    BuiltValueNullFieldError.checkNotNull(credit_id, r'MovieCast', 'credit_id');
+    BuiltValueNullFieldError.checkNotNull(order, r'MovieCast', 'order');
+  }
+
+  @override
+  MovieCast rebuild(void Function(MovieCastBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  MovieCastBuilder toBuilder() => new MovieCastBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is MovieCast &&
+        adult == other.adult &&
+        gender == other.gender &&
+        id == other.id &&
+        known_for_department == other.known_for_department &&
+        name == other.name &&
+        original_name == other.original_name &&
+        popularity == other.popularity &&
+        profile_path == other.profile_path &&
+        cast_id == other.cast_id &&
+        character == other.character &&
+        credit_id == other.credit_id &&
+        order == other.order;
+  }
+
+  @override
+  int get hashCode {
+    var _$hash = 0;
+    _$hash = $jc(_$hash, adult.hashCode);
+    _$hash = $jc(_$hash, gender.hashCode);
+    _$hash = $jc(_$hash, id.hashCode);
+    _$hash = $jc(_$hash, known_for_department.hashCode);
+    _$hash = $jc(_$hash, name.hashCode);
+    _$hash = $jc(_$hash, original_name.hashCode);
+    _$hash = $jc(_$hash, popularity.hashCode);
+    _$hash = $jc(_$hash, profile_path.hashCode);
+    _$hash = $jc(_$hash, cast_id.hashCode);
+    _$hash = $jc(_$hash, character.hashCode);
+    _$hash = $jc(_$hash, credit_id.hashCode);
+    _$hash = $jc(_$hash, order.hashCode);
+    _$hash = $jf(_$hash);
+    return _$hash;
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper(r'MovieCast')
+          ..add('adult', adult)
+          ..add('gender', gender)
+          ..add('id', id)
+          ..add('known_for_department', known_for_department)
+          ..add('name', name)
+          ..add('original_name', original_name)
+          ..add('popularity', popularity)
+          ..add('profile_path', profile_path)
+          ..add('cast_id', cast_id)
+          ..add('character', character)
+          ..add('credit_id', credit_id)
+          ..add('order', order))
+        .toString();
+  }
+}
+
+class MovieCastBuilder implements Builder<MovieCast, MovieCastBuilder> {
+  _$MovieCast? _$v;
+
+  bool? _adult;
+  bool? get adult => _$this._adult;
+  set adult(bool? adult) => _$this._adult = adult;
+
+  int? _gender;
+  int? get gender => _$this._gender;
+  set gender(int? gender) => _$this._gender = gender;
+
+  int? _id;
+  int? get id => _$this._id;
+  set id(int? id) => _$this._id = id;
+
+  String? _known_for_department;
+  String? get known_for_department => _$this._known_for_department;
+  set known_for_department(String? known_for_department) =>
+      _$this._known_for_department = known_for_department;
+
+  String? _name;
+  String? get name => _$this._name;
+  set name(String? name) => _$this._name = name;
+
+  String? _original_name;
+  String? get original_name => _$this._original_name;
+  set original_name(String? original_name) =>
+      _$this._original_name = original_name;
+
+  double? _popularity;
+  double? get popularity => _$this._popularity;
+  set popularity(double? popularity) => _$this._popularity = popularity;
+
+  String? _profile_path;
+  String? get profile_path => _$this._profile_path;
+  set profile_path(String? profile_path) => _$this._profile_path = profile_path;
+
+  int? _cast_id;
+  int? get cast_id => _$this._cast_id;
+  set cast_id(int? cast_id) => _$this._cast_id = cast_id;
+
+  String? _character;
+  String? get character => _$this._character;
+  set character(String? character) => _$this._character = character;
+
+  String? _credit_id;
+  String? get credit_id => _$this._credit_id;
+  set credit_id(String? credit_id) => _$this._credit_id = credit_id;
+
+  int? _order;
+  int? get order => _$this._order;
+  set order(int? order) => _$this._order = order;
+
+  MovieCastBuilder();
+
+  MovieCastBuilder get _$this {
+    final $v = _$v;
+    if ($v != null) {
+      _adult = $v.adult;
+      _gender = $v.gender;
+      _id = $v.id;
+      _known_for_department = $v.known_for_department;
+      _name = $v.name;
+      _original_name = $v.original_name;
+      _popularity = $v.popularity;
+      _profile_path = $v.profile_path;
+      _cast_id = $v.cast_id;
+      _character = $v.character;
+      _credit_id = $v.credit_id;
+      _order = $v.order;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(MovieCast other) {
+    ArgumentError.checkNotNull(other, 'other');
+    _$v = other as _$MovieCast;
+  }
+
+  @override
+  void update(void Function(MovieCastBuilder)? updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  MovieCast build() => _build();
+
+  _$MovieCast _build() {
+    final _$result = _$v ??
+        new _$MovieCast._(
+            adult: BuiltValueNullFieldError.checkNotNull(
+                adult, r'MovieCast', 'adult'),
+            gender: BuiltValueNullFieldError.checkNotNull(
+                gender, r'MovieCast', 'gender'),
+            id: BuiltValueNullFieldError.checkNotNull(id, r'MovieCast', 'id'),
+            known_for_department: BuiltValueNullFieldError.checkNotNull(
+                known_for_department, r'MovieCast', 'known_for_department'),
+            name: BuiltValueNullFieldError.checkNotNull(
+                name, r'MovieCast', 'name'),
+            original_name: BuiltValueNullFieldError.checkNotNull(
+                original_name, r'MovieCast', 'original_name'),
+            popularity: BuiltValueNullFieldError.checkNotNull(
+                popularity, r'MovieCast', 'popularity'),
+            profile_path: profile_path,
+            cast_id: BuiltValueNullFieldError.checkNotNull(
+                cast_id, r'MovieCast', 'cast_id'),
+            character: BuiltValueNullFieldError.checkNotNull(
+                character, r'MovieCast', 'character'),
+            credit_id: BuiltValueNullFieldError.checkNotNull(
+                credit_id, r'MovieCast', 'credit_id'),
+            order: BuiltValueNullFieldError.checkNotNull(
+                order, r'MovieCast', 'order'));
     replace(_$result);
     return _$result;
   }

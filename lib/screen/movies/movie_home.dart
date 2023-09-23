@@ -61,49 +61,6 @@ class _MovieHomeState extends State<MovieHome> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Top Rated Movies',
-                    style: GoogleFonts.nunito(
-                        fontSize: 25, fontWeight: FontWeight.bold),
-                  ),
-                  TextButton(onPressed: () {}, child: const Text('View More'))
-                ],
-              ),
-              SizedBox(
-                height: 275,
-                width: double.infinity,
-                child: BlocBuilder<TopRatedMoviesBloc, TopRatedMoviesState>(
-                  builder: (context, state) {
-                    if (state is TopRatedMoviesLoadingState) {
-                      return const SizedBox(
-                        height: 45,
-                        width: 45,
-                        child: Center(
-                          child: CircularProgressIndicator(strokeWidth: 5),
-                        ),
-                      );
-                    } else if (state is TopRatedMoviesLoadedState) {
-                      List<MovieInfo> movies = state.topRatedMovies;
-                      return ListView.builder(
-                        physics: const BouncingScrollPhysics(),
-                        scrollDirection: Axis.horizontal,
-                        itemCount: movies.length,
-                        itemBuilder: (context, index) {
-                          return movieCard(context, movies, index);
-                        },
-                      );
-                    } else {
-                      return const Text("Error Occured");
-                    }
-                  },
-                ),
-              ),
-              const SizedBox(
-                height: 0,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
                     'Trending Movies',
                     style: GoogleFonts.nunito(
                         fontSize: 25, fontWeight: FontWeight.bold),
@@ -126,6 +83,49 @@ class _MovieHomeState extends State<MovieHome> {
                       );
                     } else if (state is TrendingMoviesLoadedState) {
                       List<MovieInfo> movies = state.trendingMovies;
+                      return ListView.builder(
+                        physics: const BouncingScrollPhysics(),
+                        scrollDirection: Axis.horizontal,
+                        itemCount: movies.length,
+                        itemBuilder: (context, index) {
+                          return movieCard(context, movies, index);
+                        },
+                      );
+                    } else {
+                      return const Text("Error Occured");
+                    }
+                  },
+                ),
+              ),
+              const SizedBox(
+                height: 0,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Top Rated Movies',
+                    style: GoogleFonts.nunito(
+                        fontSize: 25, fontWeight: FontWeight.bold),
+                  ),
+                  TextButton(onPressed: () {}, child: const Text('View More'))
+                ],
+              ),
+              SizedBox(
+                height: 275,
+                width: double.infinity,
+                child: BlocBuilder<TopRatedMoviesBloc, TopRatedMoviesState>(
+                  builder: (context, state) {
+                    if (state is TopRatedMoviesLoadingState) {
+                      return const SizedBox(
+                        height: 45,
+                        width: 45,
+                        child: Center(
+                          child: CircularProgressIndicator(strokeWidth: 5),
+                        ),
+                      );
+                    } else if (state is TopRatedMoviesLoadedState) {
+                      List<MovieInfo> movies = state.topRatedMovies;
                       return ListView.builder(
                         physics: const BouncingScrollPhysics(),
                         scrollDirection: Axis.horizontal,
@@ -263,9 +263,11 @@ class _MovieHomeState extends State<MovieHome> {
                     child: Container(
                       color: Colors.black,
                       child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child:
-                            Text('${movies[index].vote_average.toString()}/10'),
+                        padding: const EdgeInsets.all(5.0),
+                        child: Text(
+                          '${movies[index].vote_average.toStringAsFixed(1).toString()}/10',
+                          style: GoogleFonts.nunito(fontSize: 10),
+                        ),
                       ),
                     )),
                 Positioned(

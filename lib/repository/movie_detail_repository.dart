@@ -21,4 +21,19 @@ class MovieDetailRepository {
       throw Exception("Error: Cannot Fetch Movie Detail");
     }
   }
+
+  Future<MovieCredits> getMovieCasts(int movieId) async {
+    final response = await http.get(
+      Uri.parse(
+          'https://api.themoviedb.org/3/movie/$movieId/credits?api_key=$apiKey'),
+    );
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> responseData = json.decode(response.body);
+      MovieCredits? movieCasts =
+          serializers.deserializeWith(MovieCredits.serializer, responseData);
+      return movieCasts!;
+    } else {
+      throw Exception("Error: Cannot Fetch Movie Cast");
+    }
+  }
 }

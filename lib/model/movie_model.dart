@@ -123,3 +123,36 @@ abstract class MovieDetail implements Built<MovieDetail, MovieDetailBuilder> {
 
   static Serializer<MovieDetail> get serializer => _$movieDetailSerializer;
 }
+
+abstract class MovieCredits
+    implements Built<MovieCredits, MovieCreditsBuilder> {
+  BuiltList<MovieCast> get cast;
+
+  MovieCredits._();
+
+  factory MovieCredits([Function(MovieCreditsBuilder b) updates]) =
+      _$MovieCredits;
+
+  static Serializer<MovieCredits> get serializer => _$movieCreditsSerializer;
+}
+
+abstract class MovieCast implements Built<MovieCast, MovieCastBuilder> {
+  bool get adult;
+  int get gender;
+  int get id;
+  String get known_for_department;
+  String get name;
+  String get original_name;
+  double get popularity;
+  String? get profile_path;
+  int get cast_id;
+  String get character;
+  String get credit_id;
+  int get order;
+
+  MovieCast._();
+
+  factory MovieCast([Function(MovieCastBuilder b) updates]) = _$MovieCast;
+
+  static Serializer<MovieCast> get serializer => _$movieCastSerializer;
+}

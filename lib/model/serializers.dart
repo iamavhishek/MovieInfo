@@ -16,7 +16,9 @@ part 'serializers.g.dart';
   UpcomingMovies,
   NowPlayingMovies,
   MovieGenre,
-  MovieDetail
+  MovieDetail,
+  MovieCredits,
+  MovieCast
 ])
 final Serializers serializers = (_$serializers.toBuilder()
       ..addBuilderFactory(
@@ -46,6 +48,14 @@ final Serializers serializers = (_$serializers.toBuilder()
       ..addBuilderFactory(
         const FullType(BuiltList, [FullType(MovieDetail)]),
         () => ListBuilder<MovieDetail>(),
+      )
+      ..addBuilderFactory(
+        const FullType(BuiltList, [FullType(MovieCredits)]),
+        () => ListBuilder<MovieCredits>(),
+      )
+      ..addBuilderFactory(
+        const FullType(BuiltList, [FullType(MovieCast)]),
+        () => ListBuilder<MovieCast>(),
       )
       ..addPlugin(
         StandardJsonPlugin(),
