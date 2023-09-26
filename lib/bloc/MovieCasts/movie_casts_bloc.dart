@@ -17,7 +17,6 @@ class MovieCastsBloc extends Bloc<MovieCastsEvent, MovieCastsState> {
             await movieDetailRepository.getMovieCasts(event.movieId);
         emit(MovieCastsLoadedState(movieCasts: movieCast.cast.asList()));
       } catch (e) {
-        print(e);
         emit(MovieCastsLoadingFailedState(error: e.toString()));
       }
     });

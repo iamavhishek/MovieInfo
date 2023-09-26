@@ -57,6 +57,12 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                 elevation: 0,
                 title: Text(movieDetail.original_title),
               ),
+              floatingActionButton: FloatingActionButton(
+                onPressed: () {
+                  Navigator.pop(context, movieDetail);
+                },
+                child: const Icon(Icons.arrow_downward),
+              ),
               body: SingleChildScrollView(
                 physics: const BouncingScrollPhysics(),
                 child: Container(
@@ -163,7 +169,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                         ),
                       ),
                       SizedBox(
-                        height: 200,
+                        height: 250,
                         width: double.infinity,
                         child: BlocBuilder<MovieCastsBloc, MovieCastsState>(
                           builder: (context, state) {
@@ -192,8 +198,8 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                                         MaterialPageRoute(
                                           builder: ((context) =>
                                               MovieDetailScreen(
-                                                  movieId:
-                                                      movieCast[index].id)),
+                                                movieId: movieCast[index].id,
+                                              )),
                                         ),
                                       );
                                     },
@@ -263,11 +269,16 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                                             style: GoogleFonts.nunito(
                                                 fontSize: 12),
                                           ),
+                                          Text(
+                                            "(${movieCast[index].character})",
+                                            textAlign: TextAlign.center,
+                                            style: GoogleFonts.nunito(
+                                                fontSize: 10),
+                                          ),
                                         ],
                                       ),
                                     ),
                                   );
-                                  ;
                                 },
                               );
                             } else {

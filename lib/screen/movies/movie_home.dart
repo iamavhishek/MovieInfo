@@ -17,6 +17,8 @@ class MovieHome extends StatefulWidget {
 }
 
 class _MovieHomeState extends State<MovieHome> {
+  bool _visibility = false;
+  MovieDetail? movieDetail;
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -50,183 +52,277 @@ class _MovieHomeState extends State<MovieHome> {
             ),
         ),
       ],
-      child: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      child: Stack(
+        children: [
+          SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    'Trending Movies',
-                    style: GoogleFonts.nunito(
-                        fontSize: 25, fontWeight: FontWeight.bold),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Trending Movies',
+                        style: GoogleFonts.nunito(
+                            fontSize: 25, fontWeight: FontWeight.bold),
+                      ),
+                      TextButton(
+                        onPressed: () {},
+                        child: const Text('View More'),
+                      )
+                    ],
                   ),
-                  TextButton(onPressed: () {}, child: const Text('View More'))
+                  SizedBox(
+                    height: 275,
+                    width: double.infinity,
+                    child: BlocBuilder<TrendingMoviesBloc, TrendingMoviesState>(
+                      builder: (context, state) {
+                        if (state is TrendingMoviesLoadingState) {
+                          return const SizedBox(
+                            height: 45,
+                            width: 45,
+                            child: Center(
+                              child: CircularProgressIndicator(strokeWidth: 5),
+                            ),
+                          );
+                        } else if (state is TrendingMoviesLoadedState) {
+                          List<MovieInfo> movies = state.trendingMovies;
+                          return ListView.builder(
+                            physics: const BouncingScrollPhysics(),
+                            scrollDirection: Axis.horizontal,
+                            itemCount: movies.length,
+                            itemBuilder: (context, index) {
+                              return movieCard(context, movies, index);
+                            },
+                          );
+                        } else {
+                          return const Text("Error Occured");
+                        }
+                      },
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 0,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Top Rated Movies',
+                        style: GoogleFonts.nunito(
+                            fontSize: 25, fontWeight: FontWeight.bold),
+                      ),
+                      TextButton(
+                          onPressed: () {}, child: const Text('View More'))
+                    ],
+                  ),
+                  SizedBox(
+                    height: 275,
+                    width: double.infinity,
+                    child: BlocBuilder<TopRatedMoviesBloc, TopRatedMoviesState>(
+                      builder: (context, state) {
+                        if (state is TopRatedMoviesLoadingState) {
+                          return const SizedBox(
+                            height: 45,
+                            width: 45,
+                            child: Center(
+                              child: CircularProgressIndicator(strokeWidth: 5),
+                            ),
+                          );
+                        } else if (state is TopRatedMoviesLoadedState) {
+                          List<MovieInfo> movies = state.topRatedMovies;
+                          return ListView.builder(
+                            physics: const BouncingScrollPhysics(),
+                            scrollDirection: Axis.horizontal,
+                            itemCount: movies.length,
+                            itemBuilder: (context, index) {
+                              return movieCard(context, movies, index);
+                            },
+                          );
+                        } else {
+                          return const Text("Error Occured");
+                        }
+                      },
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 0,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Now Playing Movies',
+                        style: GoogleFonts.nunito(
+                            fontSize: 25, fontWeight: FontWeight.bold),
+                      ),
+                      TextButton(
+                        onPressed: () {},
+                        child: const Text('View More'),
+                      )
+                    ],
+                  ),
+                  SizedBox(
+                    height: 275,
+                    width: double.infinity,
+                    child: BlocBuilder<NowPlayingMoviesBloc,
+                        NowPlayingMoviesState>(
+                      builder: (context, state) {
+                        if (state is NowPlayingMoviesLoadingState) {
+                          return const SizedBox(
+                            height: 45,
+                            width: 45,
+                            child: Center(
+                              child: CircularProgressIndicator(strokeWidth: 5),
+                            ),
+                          );
+                        } else if (state is NowPlayingMoviesLoadedState) {
+                          List<MovieInfo> movies = state.nowPlayingMovies;
+                          return ListView.builder(
+                            physics: const BouncingScrollPhysics(),
+                            scrollDirection: Axis.horizontal,
+                            itemCount: movies.length,
+                            itemBuilder: (context, index) {
+                              return movieCard(context, movies, index);
+                            },
+                          );
+                        } else {
+                          return const Text("Error Occured");
+                        }
+                      },
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 0,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Upcoming Movies',
+                        style: GoogleFonts.nunito(
+                            fontSize: 25, fontWeight: FontWeight.bold),
+                      ),
+                      TextButton(
+                          onPressed: () {}, child: const Text('View More'))
+                    ],
+                  ),
+                  SizedBox(
+                    height: 275,
+                    width: double.infinity,
+                    child: BlocBuilder<UpcomingMoviesBloc, UpcomingMoviesState>(
+                      builder: (context, state) {
+                        if (state is UpcomingMoviesLoadingState) {
+                          return const SizedBox(
+                            height: 45,
+                            width: 45,
+                            child: Center(
+                              child: CircularProgressIndicator(strokeWidth: 5),
+                            ),
+                          );
+                        } else if (state is UpcomingMoviesLoadedState) {
+                          List<MovieInfo> movies = state.upcomingMovies;
+                          return ListView.builder(
+                            physics: const BouncingScrollPhysics(),
+                            scrollDirection: Axis.horizontal,
+                            itemCount: movies.length,
+                            itemBuilder: (context, index) {
+                              return movieCard(context, movies, index);
+                            },
+                          );
+                        } else {
+                          return const Text("Error Occured");
+                        }
+                      },
+                    ),
+                  )
                 ],
               ),
-              SizedBox(
-                height: 275,
-                width: double.infinity,
-                child: BlocBuilder<TrendingMoviesBloc, TrendingMoviesState>(
-                  builder: (context, state) {
-                    if (state is TrendingMoviesLoadingState) {
-                      return const SizedBox(
-                        height: 45,
-                        width: 45,
-                        child: Center(
-                          child: CircularProgressIndicator(strokeWidth: 5),
+            ),
+          ),
+          movieDetail != null
+              ? miniInfoCard(context, movieDetail)
+              : const SizedBox()
+        ],
+      ),
+    );
+  }
+
+  Align miniInfoCard(BuildContext context, MovieDetail? movieDetail) {
+    return Align(
+      alignment: Alignment.bottomCenter,
+      widthFactor: MediaQuery.of(context).size.width * 1,
+      child: Visibility(
+        visible: _visibility,
+        child: InkWell(
+          onTap: () async {
+            movieDetail = await Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: ((context) =>
+                    MovieDetailScreen(movieId: movieDetail!.id)),
+              ),
+            );
+            if (movieDetail != null) {
+              setState(() {
+                _visibility = true;
+              });
+            } else {
+              setState(() {
+                _visibility = false;
+              });
+            }
+          },
+          child: Container(
+            height: 100,
+            color: Colors.black,
+            width: MediaQuery.of(context).size.width,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Image.network(
+                    "https://image.tmdb.org/t/p/w500//${movieDetail!.poster_path}"),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: SizedBox(
+                    width: MediaQuery.of(context).size.width * .65,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(
+                          movieDetail.original_title,
+                          style: GoogleFonts.nunito(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      );
-                    } else if (state is TrendingMoviesLoadedState) {
-                      List<MovieInfo> movies = state.trendingMovies;
-                      return ListView.builder(
-                        physics: const BouncingScrollPhysics(),
-                        scrollDirection: Axis.horizontal,
-                        itemCount: movies.length,
-                        itemBuilder: (context, index) {
-                          return movieCard(context, movies, index);
-                        },
-                      );
-                    } else {
-                      return const Text("Error Occured");
-                    }
-                  },
-                ),
-              ),
-              const SizedBox(
-                height: 0,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Top Rated Movies',
-                    style: GoogleFonts.nunito(
-                        fontSize: 25, fontWeight: FontWeight.bold),
+                        Text(
+                          maxLines: 3,
+                          overflow: TextOverflow.ellipsis,
+                          movieDetail.overview,
+                          style: GoogleFonts.nunito(fontSize: 12),
+                        )
+                      ],
+                    ),
                   ),
-                  TextButton(onPressed: () {}, child: const Text('View More'))
-                ],
-              ),
-              SizedBox(
-                height: 275,
-                width: double.infinity,
-                child: BlocBuilder<TopRatedMoviesBloc, TopRatedMoviesState>(
-                  builder: (context, state) {
-                    if (state is TopRatedMoviesLoadingState) {
-                      return const SizedBox(
-                        height: 45,
-                        width: 45,
-                        child: Center(
-                          child: CircularProgressIndicator(strokeWidth: 5),
-                        ),
-                      );
-                    } else if (state is TopRatedMoviesLoadedState) {
-                      List<MovieInfo> movies = state.topRatedMovies;
-                      return ListView.builder(
-                        physics: const BouncingScrollPhysics(),
-                        scrollDirection: Axis.horizontal,
-                        itemCount: movies.length,
-                        itemBuilder: (context, index) {
-                          return movieCard(context, movies, index);
-                        },
-                      );
-                    } else {
-                      return const Text("Error Occured");
-                    }
-                  },
                 ),
-              ),
-              const SizedBox(
-                height: 0,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Now Playing Movies',
-                    style: GoogleFonts.nunito(
-                        fontSize: 25, fontWeight: FontWeight.bold),
+                Center(
+                  child: IconButton(
+                    onPressed: () {
+                      setState(() {
+                        _visibility = false;
+                      });
+                    },
+                    icon: const Icon(Icons.close),
                   ),
-                  TextButton(onPressed: () {}, child: const Text('View More'))
-                ],
-              ),
-              SizedBox(
-                height: 275,
-                width: double.infinity,
-                child: BlocBuilder<NowPlayingMoviesBloc, NowPlayingMoviesState>(
-                  builder: (context, state) {
-                    if (state is NowPlayingMoviesLoadingState) {
-                      return const SizedBox(
-                        height: 45,
-                        width: 45,
-                        child: Center(
-                          child: CircularProgressIndicator(strokeWidth: 5),
-                        ),
-                      );
-                    } else if (state is NowPlayingMoviesLoadedState) {
-                      List<MovieInfo> movies = state.nowPlayingMovies;
-                      return ListView.builder(
-                        physics: const BouncingScrollPhysics(),
-                        scrollDirection: Axis.horizontal,
-                        itemCount: movies.length,
-                        itemBuilder: (context, index) {
-                          return movieCard(context, movies, index);
-                        },
-                      );
-                    } else {
-                      return const Text("Error Occured");
-                    }
-                  },
-                ),
-              ),
-              const SizedBox(
-                height: 0,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Upcoming Movies',
-                    style: GoogleFonts.nunito(
-                        fontSize: 25, fontWeight: FontWeight.bold),
-                  ),
-                  TextButton(onPressed: () {}, child: const Text('View More'))
-                ],
-              ),
-              SizedBox(
-                height: 275,
-                width: double.infinity,
-                child: BlocBuilder<UpcomingMoviesBloc, UpcomingMoviesState>(
-                  builder: (context, state) {
-                    if (state is UpcomingMoviesLoadingState) {
-                      return const SizedBox(
-                        height: 45,
-                        width: 45,
-                        child: Center(
-                          child: CircularProgressIndicator(strokeWidth: 5),
-                        ),
-                      );
-                    } else if (state is UpcomingMoviesLoadedState) {
-                      List<MovieInfo> movies = state.upcomingMovies;
-                      return ListView.builder(
-                        physics: const BouncingScrollPhysics(),
-                        scrollDirection: Axis.horizontal,
-                        itemCount: movies.length,
-                        itemBuilder: (context, index) {
-                          return movieCard(context, movies, index);
-                        },
-                      );
-                    } else {
-                      return const Text("Error Occured");
-                    }
-                  },
-                ),
-              )
-            ],
+                )
+              ],
+            ),
           ),
         ),
       ),
@@ -236,14 +332,23 @@ class _MovieHomeState extends State<MovieHome> {
   GestureDetector movieCard(
       BuildContext context, List<MovieInfo> movies, int index) {
     return GestureDetector(
-      onTap: () {
-        Navigator.push(
+      onTap: () async {
+        movieDetail = await Navigator.push(
           context,
           MaterialPageRoute(
             builder: ((context) =>
                 MovieDetailScreen(movieId: movies[index].id)),
           ),
         );
+        if (movieDetail != null) {
+          setState(() {
+            _visibility = true;
+          });
+        } else {
+          setState(() {
+            _visibility = false;
+          });
+        }
       },
       child: Container(
         margin: const EdgeInsets.all(8),

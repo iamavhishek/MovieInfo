@@ -106,6 +106,7 @@ abstract class MovieGenre implements Built<MovieGenre, MovieGenreBuilder> {
 
 abstract class MovieDetail implements Built<MovieDetail, MovieDetailBuilder> {
   bool get adult;
+  int get id;
   String get backdrop_path;
   double get budget;
   BuiltList<MovieGenre> get genres;

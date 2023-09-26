@@ -480,6 +480,8 @@ class _$MovieDetailSerializer implements StructuredSerializer<MovieDetail> {
     final result = <Object?>[
       'adult',
       serializers.serialize(object.adult, specifiedType: const FullType(bool)),
+      'id',
+      serializers.serialize(object.id, specifiedType: const FullType(int)),
       'backdrop_path',
       serializers.serialize(object.backdrop_path,
           specifiedType: const FullType(String)),
@@ -538,6 +540,10 @@ class _$MovieDetailSerializer implements StructuredSerializer<MovieDetail> {
         case 'adult':
           result.adult = serializers.deserialize(value,
               specifiedType: const FullType(bool))! as bool;
+          break;
+        case 'id':
+          result.id = serializers.deserialize(value,
+              specifiedType: const FullType(int))! as int;
           break;
         case 'backdrop_path':
           result.backdrop_path = serializers.deserialize(value,
@@ -1728,6 +1734,8 @@ class _$MovieDetail extends MovieDetail {
   @override
   final bool adult;
   @override
+  final int id;
+  @override
   final String backdrop_path;
   @override
   final double budget;
@@ -1753,6 +1761,7 @@ class _$MovieDetail extends MovieDetail {
 
   _$MovieDetail._(
       {required this.adult,
+      required this.id,
       required this.backdrop_path,
       required this.budget,
       required this.genres,
@@ -1765,6 +1774,7 @@ class _$MovieDetail extends MovieDetail {
       this.poster_path})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(adult, r'MovieDetail', 'adult');
+    BuiltValueNullFieldError.checkNotNull(id, r'MovieDetail', 'id');
     BuiltValueNullFieldError.checkNotNull(
         backdrop_path, r'MovieDetail', 'backdrop_path');
     BuiltValueNullFieldError.checkNotNull(budget, r'MovieDetail', 'budget');
@@ -1790,6 +1800,7 @@ class _$MovieDetail extends MovieDetail {
     if (identical(other, this)) return true;
     return other is MovieDetail &&
         adult == other.adult &&
+        id == other.id &&
         backdrop_path == other.backdrop_path &&
         budget == other.budget &&
         genres == other.genres &&
@@ -1806,6 +1817,7 @@ class _$MovieDetail extends MovieDetail {
   int get hashCode {
     var _$hash = 0;
     _$hash = $jc(_$hash, adult.hashCode);
+    _$hash = $jc(_$hash, id.hashCode);
     _$hash = $jc(_$hash, backdrop_path.hashCode);
     _$hash = $jc(_$hash, budget.hashCode);
     _$hash = $jc(_$hash, genres.hashCode);
@@ -1824,6 +1836,7 @@ class _$MovieDetail extends MovieDetail {
   String toString() {
     return (newBuiltValueToStringHelper(r'MovieDetail')
           ..add('adult', adult)
+          ..add('id', id)
           ..add('backdrop_path', backdrop_path)
           ..add('budget', budget)
           ..add('genres', genres)
@@ -1844,6 +1857,10 @@ class MovieDetailBuilder implements Builder<MovieDetail, MovieDetailBuilder> {
   bool? _adult;
   bool? get adult => _$this._adult;
   set adult(bool? adult) => _$this._adult = adult;
+
+  int? _id;
+  int? get id => _$this._id;
+  set id(int? id) => _$this._id = id;
 
   String? _backdrop_path;
   String? get backdrop_path => _$this._backdrop_path;
@@ -1894,6 +1911,7 @@ class MovieDetailBuilder implements Builder<MovieDetail, MovieDetailBuilder> {
     final $v = _$v;
     if ($v != null) {
       _adult = $v.adult;
+      _id = $v.id;
       _backdrop_path = $v.backdrop_path;
       _budget = $v.budget;
       _genres = $v.genres.toBuilder();
@@ -1930,6 +1948,8 @@ class MovieDetailBuilder implements Builder<MovieDetail, MovieDetailBuilder> {
           new _$MovieDetail._(
               adult: BuiltValueNullFieldError.checkNotNull(
                   adult, r'MovieDetail', 'adult'),
+              id: BuiltValueNullFieldError.checkNotNull(
+                  id, r'MovieDetail', 'id'),
               backdrop_path: BuiltValueNullFieldError.checkNotNull(
                   backdrop_path, r'MovieDetail', 'backdrop_path'),
               budget: BuiltValueNullFieldError.checkNotNull(
